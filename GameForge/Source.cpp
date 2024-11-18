@@ -285,19 +285,7 @@ void Block_03(float x, float y, float z, float rx, float ry, float rz, float ang
 
 
 
-
-
 //ground//
-void ground() {
-
-    glColor3f(0.2, 0.5, 0.6);
-    glBegin(GL_QUADS);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20, 0, -20);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(20, 0, -20);
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(20, 0, 20);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20, 0, 20);
-    glEnd();
-}
 
 void ground_block_1() {
 
