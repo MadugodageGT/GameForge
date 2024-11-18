@@ -14,6 +14,7 @@ int width;
 int height;
 bool isl1On = false;
 bool isl2On = false;
+bool isl3On = false;
 
 //timer for textures
 int flaame_animation_timer = 0;
@@ -72,8 +73,10 @@ void ground_block_1();
 
 
 void block_type_1(GLuint texture);
+void block_type_2(GLuint texture);
 void Block_01(float x, float y, float z, float rx, float ry, float rz, float angle);
-
+void Block_02(float x, float y, float z, float rx, float ry, float rz, float angle);
+void Block_03(float x, float y, float z, float rx, float ry, float rz, float angle);
 void displayUnits();
 
 void display(void);
@@ -362,10 +365,10 @@ void block_type_2(GLuint texture) {
             { halfWidth, halfHeight, halfWidth });
         glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
 
-        glTexCoord2f(0.0f, 0.5f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
-        glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, -halfHeight, halfWidth);
-        glTexCoord2f(0.25f, 1.0f); glVertex3f(halfWidth, halfHeight, halfWidth);
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(-halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.2f, 0.0f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.4f, 0.0f); glVertex3f(halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.4f, 1.0f); glVertex3f(halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.2f, 1.0f); glVertex3f(-halfWidth, halfHeight, halfWidth);
     }
     glEnd();
 
@@ -379,10 +382,10 @@ void block_type_2(GLuint texture) {
             { halfWidth, halfHeight, -halfWidth });
         glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
 
-        glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-        glTexCoord2f(0.5f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
-        glTexCoord2f(0.25f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
-        glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.6f, 0.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.6f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.4f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.4f, 0.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
     }
     glEnd();
 
@@ -396,10 +399,10 @@ void block_type_2(GLuint texture) {
             { halfWidth, halfHeight, halfWidth });
         glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
 
-        glTexCoord2f(0.5f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
-        glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
-        glTexCoord2f(0.75f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
-        glTexCoord2f(0.75f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.0f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.2f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.2f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
     }
     glEnd();
 
@@ -412,11 +415,11 @@ void block_type_2(GLuint texture) {
             { halfWidth, -halfHeight, -halfWidth },
             { halfWidth, -halfHeight, halfWidth });
         glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-        glTexCoord2f(1.0f, 1.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-        glTexCoord2f(0.75f, 1.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
-        glTexCoord2f(0.75f, 0.5f); glVertex3f(halfWidth, -halfHeight, halfWidth);
-        glTexCoord2f(1.0f, 0.5f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
+        
+        glTexCoord2f(0.2f, 0.5f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.0f, 0.5f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.2f, 0.0f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
     }
     glEnd();
 
@@ -430,10 +433,10 @@ void block_type_2(GLuint texture) {
             { halfWidth, halfHeight, halfWidth });
         glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
 
-        glTexCoord2f(0.25f, 0.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
-        glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, halfHeight, -halfWidth);
-        glTexCoord2f(0.0f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.8f, 0.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.8f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.6f, 1.0f); glVertex3f(halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.6f, 0.0f); glVertex3f(halfWidth, -halfHeight, halfWidth);
     }
     glEnd();
 
@@ -447,14 +450,16 @@ void block_type_2(GLuint texture) {
             { -halfWidth, halfHeight, halfWidth });
         glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
 
-        glTexCoord2f(0.25f, 0.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-        glTexCoord2f(0.5f, 0.0f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
-        glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
-        glTexCoord2f(0.25f, 0.5f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.8f, 0.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(-halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.8f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+
     }
     glEnd();
     glPopMatrix();
 }
+
 
 void Block_01(float x, float y, float z, float rx, float ry, float rz, float angle) {
     // position x y z, axis x, y, z, angle
@@ -494,7 +499,22 @@ void Block_02(float x, float y, float z, float rx, float ry, float rz, float ang
     glPopMatrix();
 
 }
+void Block_03(float x, float y, float z, float rx, float ry, float rz, float angle) {
+    // position x y z, axis x, y, z, angle
 
+    float height = 2;
+    float width = 2;
+
+    glEnable(GL_TEXTURE_2D);
+    glColor3f(1, 1, 1);
+
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glRotatef(angle, rx, ry, rz);
+    block_type_2(textures_blocks[1]);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+}
 
 
 //ground//
@@ -541,10 +561,10 @@ void displayUnits() {
     //blocks
     glPushMatrix();
     Block_01(-5, 0, -7, 0, 0, 0, 0);
-   // Block_02(-3, 0, -7, 0, 0, 0, 0);
+    Block_03(-3, 0, -7, 0, 0, 0, 0);
     Block_02(-1, 0, -6, 0, 0, 0, 0);
-   // Block_02(-1, 0, -7, 0, 1, 0, 90);
-   // Block_02(-3, 1, -9, 0, 0, 0, 0);
+    Block_03(-1, 0, -7, 0, 1, 0, 90);
+    Block_03(-3, 1, -9, 0, 0, 0, 0);
     Block_01(-1, 2, -9, 0, 1, 0, 90);
     Block_01(-7, 0, -5, 0, 1, 0, 90);
     Block_01(-7, 0, -3, 0, 0, 0, 0);
@@ -742,6 +762,7 @@ void setFlameLight() {
 
     glShadeModel(GL_SMOOTH);
     glEnable(GL_NORMALIZE);
+   
 }
 void setFlameMaterial() {
     GLfloat flameDiffuse[] = { 1.0f, 0.5f, 0.3f, 1.0f }; // Slightly orange diffuse
@@ -851,6 +872,15 @@ void keyboard(unsigned char key, int x, int y) {
         else {
             glDisable(GL_LIGHT1);
             isl2On = false;
+        }
+    if (key == '3')
+        if (!isl3On) {
+            glEnable(GL_LIGHT2);
+            isl3On = true;
+        }
+        else {
+            glDisable(GL_LIGHT2);
+            isl3On = false;
         }
 
     glutPostRedisplay();
