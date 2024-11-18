@@ -70,6 +70,8 @@ void setFlameMaterial();
 void flames_animated(float x, float y, float z);
 void ground_block_1();
 
+
+void block_type_1(GLuint texture);
 void Block_01(float x, float y, float z, float rx, float ry, float rz, float angle);
 
 void displayUnits();
@@ -98,6 +100,23 @@ int main(void) {
     glutMainLoop();
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ///////////////////////////////////////////////////////////////////
 
 ////cube////
@@ -217,8 +236,6 @@ void drawCubeWithTexture(GLuint front_texture, GLuint back_texture, GLuint top_t
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
-
-
  
 void Block_01(float x, float y, float z, float rx, float ry, float rz, float angle) {
     // position x y z, axis x, y, z, angle
@@ -230,125 +247,123 @@ void Block_01(float x, float y, float z, float rx, float ry, float rz, float ang
     glColor3f(1, 1, 1);
 
     glPushMatrix();
-        glTranslatef(x, y, z);
-        glRotatef(angle, rx, ry, rz);
-    
-        glPushMatrix();
-   
-            glPushMatrix();
-
-                float halfHeight = height / 2.0f;
-                float halfWidth = width / 2.0f;
-
-                // Front Face
-                glBindTexture(GL_TEXTURE_2D, textures_blocks[0]);
-                glBegin(GL_QUADS);
-                {
-                    auto normal = calculateNormal(
-                        { -halfWidth, -halfHeight, halfWidth },
-                        { halfWidth, -halfHeight, halfWidth },
-                        { halfWidth, halfHeight, halfWidth });
-                    glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-                    glTexCoord2f(0.0f, 0.5f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
-                    glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, -halfHeight, halfWidth);
-                    glTexCoord2f(0.25f, 1.0f); glVertex3f(halfWidth, halfHeight, halfWidth);
-                    glTexCoord2f(0.0f, 1.0f); glVertex3f(-halfWidth, halfHeight, halfWidth);
-                }
-                glEnd();
-
-                // Back Face
-                //glBindTexture(GL_TEXTURE_2D, back_texture);
-                glBegin(GL_QUADS);
-                {
-                    auto normal = calculateNormal(
-                        { -halfWidth, -halfHeight, -halfWidth },
-                        { halfWidth, -halfHeight, -halfWidth },
-                        { halfWidth, halfHeight, -halfWidth });
-                    glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-                    glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-                    glTexCoord2f(0.5f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
-                    glTexCoord2f(0.25f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
-                    glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
-                }
-                glEnd();
-
-                // Top Face
-               // glBindTexture(GL_TEXTURE_2D, top_texture);
-                glBegin(GL_QUADS);
-                {
-                    auto normal = calculateNormal(
-                        { -halfWidth, halfHeight, -halfWidth },
-                        { -halfWidth, halfHeight, halfWidth },
-                        { halfWidth, halfHeight, halfWidth });
-                    glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-                    glTexCoord2f(0.5f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
-                    glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
-                    glTexCoord2f(0.75f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
-                    glTexCoord2f(0.75f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
-                }
-                glEnd();
-
-                // Bottom Face
-                //glBindTexture(GL_TEXTURE_2D, bottom_texture);
-                glBegin(GL_QUADS);
-                {
-                    auto normal = calculateNormal(
-                        { -halfWidth, -halfHeight, -halfWidth },
-                        { halfWidth, -halfHeight, -halfWidth },
-                        { halfWidth, -halfHeight, halfWidth });
-                    glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-                    glTexCoord2f(1.0f, 1.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-                    glTexCoord2f(0.75f, 1.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
-                    glTexCoord2f(0.75f, 0.5f); glVertex3f(halfWidth, -halfHeight, halfWidth);
-                    glTexCoord2f(1.0f, 0.5f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
-                }
-                glEnd();
-
-                // Right Face
-               // glBindTexture(GL_TEXTURE_2D, right_texture);
-                glBegin(GL_QUADS);
-                {
-                    auto normal = calculateNormal(
-                        { halfWidth, -halfHeight, -halfWidth },
-                        { halfWidth, -halfHeight, halfWidth },
-                        { halfWidth, halfHeight, halfWidth });
-                    glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-                    glTexCoord2f(0.25f, 0.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
-                    glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, halfHeight, -halfWidth);
-                    glTexCoord2f(0.0f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
-                    glTexCoord2f(0.0f, 0.0f); glVertex3f(halfWidth, -halfHeight, halfWidth);
-                }
-                glEnd();
-
-                // Left Face
-               // glBindTexture(GL_TEXTURE_2D, left_texture);
-                glBegin(GL_QUADS);
-                {
-                    auto normal = calculateNormal(
-                        { -halfWidth, -halfHeight, -halfWidth },
-                        { -halfWidth, -halfHeight, halfWidth },
-                        { -halfWidth, halfHeight, halfWidth });
-                    glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
-
-                    glTexCoord2f(0.25f, 0.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-                    glTexCoord2f(0.5f, 0.0f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
-                    glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
-                    glTexCoord2f(0.25f, 0.5f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
-                }
-                glEnd();
-           glPopMatrix();
-        glPopMatrix();
+    glTranslatef(x, y, z);
+    glRotatef(angle, rx, ry, rz);
+    block_type_1(textures_blocks[0]);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
 
 
+void block_type_1(GLuint texture) {
+    glPushMatrix();
 
+    float halfHeight = 1;
+    float halfWidth = 1;
+
+    // Front Face
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+    {
+        auto normal = calculateNormal(
+            { -halfWidth, -halfHeight, halfWidth },
+            { halfWidth, -halfHeight, halfWidth },
+            { halfWidth, halfHeight, halfWidth });
+        glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
+
+        glTexCoord2f(0.0f, 0.5f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.25f, 1.0f); glVertex3f(halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(-halfWidth, halfHeight, halfWidth);
+    }
+    glEnd();
+
+    // Back Face
+    //glBindTexture(GL_TEXTURE_2D, back_texture);
+    glBegin(GL_QUADS);
+    {
+        auto normal = calculateNormal(
+            { -halfWidth, -halfHeight, -halfWidth },
+            { halfWidth, -halfHeight, -halfWidth },
+            { halfWidth, halfHeight, -halfWidth });
+        glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
+
+        glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.5f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.25f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
+    }
+    glEnd();
+
+    // Top Face
+   // glBindTexture(GL_TEXTURE_2D, top_texture);
+    glBegin(GL_QUADS);
+    {
+        auto normal = calculateNormal(
+            { -halfWidth, halfHeight, -halfWidth },
+            { -halfWidth, halfHeight, halfWidth },
+            { halfWidth, halfHeight, halfWidth });
+        glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
+
+        glTexCoord2f(0.5f, 1.0f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.75f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.75f, 1.0f); glVertex3f(halfWidth, halfHeight, -halfWidth);
+    }
+    glEnd();
+
+    // Bottom Face
+    //glBindTexture(GL_TEXTURE_2D, bottom_texture);
+    glBegin(GL_QUADS);
+    {
+        auto normal = calculateNormal(
+            { -halfWidth, -halfHeight, -halfWidth },
+            { halfWidth, -halfHeight, -halfWidth },
+            { halfWidth, -halfHeight, halfWidth });
+        glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
+
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.75f, 1.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.75f, 0.5f); glVertex3f(halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(1.0f, 0.5f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
+    }
+    glEnd();
+
+    // Right Face
+   // glBindTexture(GL_TEXTURE_2D, right_texture);
+    glBegin(GL_QUADS);
+    {
+        auto normal = calculateNormal(
+            { halfWidth, -halfHeight, -halfWidth },
+            { halfWidth, -halfHeight, halfWidth },
+            { halfWidth, halfHeight, halfWidth });
+        glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
+
+        glTexCoord2f(0.25f, 0.0f); glVertex3f(halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.25f, 0.5f); glVertex3f(halfWidth, halfHeight, -halfWidth);
+        glTexCoord2f(0.0f, 0.5f); glVertex3f(halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(halfWidth, -halfHeight, halfWidth);
+    }
+    glEnd();
+
+    // Left Face
+   // glBindTexture(GL_TEXTURE_2D, left_texture);
+    glBegin(GL_QUADS);
+    {
+        auto normal = calculateNormal(
+            { -halfWidth, -halfHeight, -halfWidth },
+            { -halfWidth, -halfHeight, halfWidth },
+            { -halfWidth, halfHeight, halfWidth });
+        glNormal3f(std::get<0>(normal), std::get<1>(normal), std::get<2>(normal));
+
+        glTexCoord2f(0.25f, 0.0f); glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+        glTexCoord2f(0.5f, 0.0f); glVertex3f(-halfWidth, -halfHeight, halfWidth);
+        glTexCoord2f(0.5f, 0.5f); glVertex3f(-halfWidth, halfHeight, halfWidth);
+        glTexCoord2f(0.25f, 0.5f); glVertex3f(-halfWidth, halfHeight, -halfWidth);
+    }
+    glEnd();
+    glPopMatrix();
+}
 
 //ground//
 void ground_block_1() {
