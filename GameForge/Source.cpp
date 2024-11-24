@@ -38,7 +38,7 @@ GLfloat objTX = 0.0; GLfloat objTY = 0.0; GLfloat objTZ = 0.0;
 //loading textures
 GLuint texture_flame[4];
 GLuint texture_ground_block_1[4];
-GLuint textures_blocks[4];
+GLuint textures_blocks[5];
 void init(void);
 
 void loadTexture();
@@ -78,6 +78,7 @@ void block_type_3(GLuint texture);
 void Block_01(float x, float y, float z, float rx, float ry, float rz, float angle);
 void Block_02(float x, float y, float z, float rx, float ry, float rz, float angle);
 void Block_03(float x, float y, float z, float rx, float ry, float rz, float angle);
+void Block_04(float x, float y, float z, float rx, float ry, float rz, float angle);
 void flame_base(float x, float y, float z, float rx, float ry, float rz, float angle);
 void displayUnits();
 
@@ -579,10 +580,6 @@ void block_type_3(GLuint texture) {
 
 void Block_01(float x, float y, float z, float rx, float ry, float rz, float angle) {
     // position x y z, axis x, y, z, angle
-
-    float height = 2;
-    float width = 2;
-
     glEnable(GL_TEXTURE_2D);
     glColor3f(1, 1, 1);
 
@@ -594,11 +591,7 @@ void Block_01(float x, float y, float z, float rx, float ry, float rz, float ang
     glDisable(GL_TEXTURE_2D);
 }
 void Block_02(float x, float y, float z, float rx, float ry, float rz, float angle) {
-    // position x y z, axis x, y, z, angle
-
-    float height = 2;
-    float width = 2;
-
+    // position x y z, axis x, y, z, angle;
     glEnable(GL_TEXTURE_2D);
     glColor3f(1, 1, 1);
 
@@ -617,10 +610,6 @@ void Block_02(float x, float y, float z, float rx, float ry, float rz, float ang
 }
 void Block_03(float x, float y, float z, float rx, float ry, float rz, float angle) {
     // position x y z, axis x, y, z, angle
-
-    float height = 2;
-    float width = 2;
-
     glEnable(GL_TEXTURE_2D);
     glColor3f(1, 1, 1);
 
@@ -631,7 +620,20 @@ void Block_03(float x, float y, float z, float rx, float ry, float rz, float ang
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
+void Block_04(float x, float y, float z, float rx, float ry, float rz, float angle) {
+    // position x y z, axis x, y, z, angle
+    //setFlameLight();
+    glEnable(GL_TEXTURE_2D);
+    glColor3f(1, 1, 1);
 
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glRotatef(angle, rx, ry, rz);
+    block_type_2(textures_blocks[4]);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+    
+}
 
 
 //ground//
@@ -702,10 +704,21 @@ void displayUnits() {
     Block_01(-7, 0, -5, 0, 1, 0, 90);
     Block_01(-7, 0, -3, 0, 0, 0, 0);
     Block_02(-7, 0, -1, 0, 0, 0, 0);
-    //flames_animated(-3, 0, -3);
+    Block_04( 7, 1, -3, 0, 1, 0, -90);
+    Block_02(7, 0, -5, 0, 0, 0, -90);
+    Block_03(9, 1, -5, 0, 0, 0, -90);
+    Block_03(9, 1, -3, 0, 0, 0, -90);
+    Block_02(7, 0, -1, 0, 1, 0, -90);
+    Block_03(9, 1, -1, 0, 0, 0, -90);
+
+    glPushMatrix();
+    glTranslatef(9, 0, 0.5);
+    glScalef(0.5, 2, 0.5);
+    Block_01(0, 0, 0, 0, 0, 0, 0);
+    glPopMatrix();
+
     flame_base(-9, -1, 3, 0, 0, 0, 0);
 
-    // flames_animated(-3, 0, -3);
     glPopMatrix();
 
 }
@@ -720,11 +733,12 @@ void loadTexture() {
         "textures/flames/frame0003.png",
     };
 
-    const char* block_texture_files[4] = {
+    const char* block_texture_files[5] = {
         "textures/block_textures/block_1.png",
         "textures/block_textures/block_2.png",
         "textures/block_textures/block_3.png",
         "textures/block_textures/block_4.png",
+        "textures/block_textures/block_5.png",
     };
 
     const char* ground_block_1_files[4] = {
@@ -743,7 +757,7 @@ void loadTexture() {
     }
 
     //block textures
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         textures_blocks[i] = SOIL_load_OGL_texture(block_texture_files[i], SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_GL_MIPMAPS | SOIL_FLAG_INVERT_Y);
         if (!textures_blocks[i]) {
             printf("Texture loading failed: %s\n", SOIL_last_result());
@@ -842,7 +856,7 @@ void setLightingAndShading() {
     GLfloat l0_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     GLfloat l0_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
     GLfloat l0_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    GLfloat l0_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
+    GLfloat l0_position[] = { 0.0f, 10.0f, 5.0f, 1.0f };
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, l0_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_diffuse);
