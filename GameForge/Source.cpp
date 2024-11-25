@@ -39,6 +39,9 @@ GLfloat objTX = 0.0; GLfloat objTY = 0.0; GLfloat objTZ = 0.0;
 GLuint texture_flame[4];
 GLuint texture_ground_block_1[4];
 GLuint textures_blocks[5];
+
+unsigned char* char_textures_block[5];
+
 void init(void);
 
 void loadTexture();
@@ -106,21 +109,6 @@ int main(void) {
     glutMainLoop();
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////
@@ -756,12 +744,32 @@ void loadTexture() {
         }
     }
 
+
+
     //block textures
+    //for (int i = 0; i < 5; i++) {
+    //    textures_blocks[i] = SOIL_load_OGL_texture(block_texture_files[i], SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_GL_MIPMAPS | SOIL_FLAG_INVERT_Y);
+    //    if (!textures_blocks[i]) {
+    //        printf("Texture loading failed: %s\n", SOIL_last_result());
+    //    }
+    //}
+
     for (int i = 0; i < 5; i++) {
-        textures_blocks[i] = SOIL_load_OGL_texture(block_texture_files[i], SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_GL_MIPMAPS | SOIL_FLAG_INVERT_Y);
-        if (!textures_blocks[i]) {
-            printf("Texture loading failed: %s\n", SOIL_last_result());
+
+        glGenTextures(1, &textures_blocks[i]);
+        glBindTexture(GL_TEXTURE_2D, textures_blocks[i]);
+
+        char_textures_block[i] = SOIL_load_image("texture.jpg", &width, &height, 0, SOIL_LOAD_RGB); //loads an image into memory without creating an OpenGL texture object.
+        if (char_textures_block[i] == NULL) {
+            printf("Error : %s", SOIL_last_result());
         }
+
+     
+      
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, char_textures_block[i]);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
     }
 
     //ground block1 texture
@@ -771,8 +779,6 @@ void loadTexture() {
             printf("Texture loading failed: %s\n", SOIL_last_result());
         }
     }
-
-
 
 }
 
@@ -884,6 +890,9 @@ void setLightingAndShading() {
 
     glShadeModel(GL_SMOOTH);
     glEnable(GL_NORMALIZE);
+
+
+
 }
 void setFlameLight() {
     //glEnable(GL_LIGHT2);  // Enable a new light source
