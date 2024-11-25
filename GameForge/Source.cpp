@@ -8,6 +8,10 @@
 #include <cmath>
 
 constexpr float PI = 3.14159265358979323846;
+
+
+
+
 float an = 0;
 float increment = 0.4;
 int width;
@@ -714,6 +718,9 @@ void displayUnits() {
 //texture loading funtion
 void loadTexture() {
 
+    int width;
+    int height;
+
     const char* flame_file[4] = {
         "textures/flames/frame0000.png",
         "textures/flames/frame0001.png",
@@ -756,16 +763,15 @@ void loadTexture() {
 
     for (int i = 0; i < 5; i++) {
 
-        glGenTextures(1, &textures_blocks[i]);
-        glBindTexture(GL_TEXTURE_2D, textures_blocks[i]);
 
-        char_textures_block[i] = SOIL_load_image("texture.jpg", &width, &height, 0, SOIL_LOAD_RGB); //loads an image into memory without creating an OpenGL texture object.
+
+        char_textures_block[i] = SOIL_load_image(block_texture_files[i], &width, &height, 0, SOIL_LOAD_RGB ); //loads an image into memory without creating an OpenGL texture object.
         if (char_textures_block[i] == NULL) {
             printf("Error : %s", SOIL_last_result());
         }
-
-     
-      
+        glGenTextures(1, &textures_blocks[i]);
+        glBindTexture(GL_TEXTURE_2D, textures_blocks[i]);
+  
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, char_textures_block[i]);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -856,7 +862,8 @@ void drawAxes() {
 
 //lighting
 void setLightingAndShading() {
-    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHTING);
+    glDisable(GL_LIGHTING);
 
     // Light 0
     GLfloat l0_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
